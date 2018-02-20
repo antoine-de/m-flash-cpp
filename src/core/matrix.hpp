@@ -259,7 +259,7 @@ void Matrix<E, IdType>::operate(MALGORITHM &algorithm,
 		inVector->resize(size());
 	}
 
-	worker->operate<VSource, VDestination>(algorithm);
+	worker->template operate<VSource, VDestination>(algorithm);
 
 	worker->set_default_destination_field(0);
 	worker->set_default_source_field(0);
