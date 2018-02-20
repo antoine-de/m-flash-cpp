@@ -252,7 +252,7 @@ void SplitterBuffer<IdType, EdgeSplitterManager_, EdgeDataType>::block_sorting( 
     partition_initial_positions[0] = 0;
     partition_offset_positions[0] = 0;
 
-    for(int32 i = 1 ; i <= partitions; i++){
+    for(IdType i = 1 ; i <= partitions; i++){
         partition_initial_positions[i] = partition_initial_positions[i-1] + edge_size * counters[i-1];
         partition_offset_positions[i] = partition_initial_positions[i];
     }
@@ -308,7 +308,7 @@ void SplitterBuffer<IdType, EdgeSplitterManager_, EdgeDataType>::split(){
 
 	//int64 partition_initial_positions[partitions+1];
 	std::vector<int64> & partition_counters = manager->getPartitionCounters();
-	for(int32 i = 0 ; i < partitions; i++){
+	for(IdType i = 0 ; i < partitions; i++){
 	    last_ptr += partition_counters[i];
 	}
 	last_ptr *= edge_size;
@@ -324,8 +324,8 @@ void SplitterBuffer<IdType, EdgeSplitterManager_, EdgeDataType>::split(){
 	char* offset = base_ptr;
 	std::string partition_file = "";
 	//writing partitions to disk
-	int32 file_id = -1;
-	for(int32 i = 0 ; i < partitions; i++){
+	IdType file_id = -1;
+	for(IdType i = 0 ; i < partitions; i++){
 	    std::string tmp_partition_file = manager->getPartitionFile(i);
 	    if(partition_file != tmp_partition_file){
 	        partition_file = tmp_partition_file;

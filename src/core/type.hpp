@@ -102,7 +102,7 @@ struct MatrixProperties{
 
 	}
 
-	int64 getEdgesBlock(int32 row, int32 col){
+	int64 getEdgesBlock(int64 row, int64 col){
 		if(row >= 0 && row <partitions && col >= 0 && col <partitions){
 			return edges_by_block[row * partitions + col];
 		}

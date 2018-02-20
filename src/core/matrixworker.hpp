@@ -327,7 +327,7 @@ void MatrixWorker<E, IdType>::clean_fields() {
 
 	}
 
-	for (int32 i = 0; i < field_count; i++) {
+	for (int64 i = 0; i < field_count; i++) {
 		array_pointers[i]->free_memory();
 	}
 
@@ -575,7 +575,7 @@ void MatrixWorker<E, IdType>::preprocessing() {
 
 	int64 source_offset;
 
-	for( int32 i = 0; i < matrixProperties.partitions; i++){
+	for( int64 i = 0; i < matrixProperties.partitions; i++){
 	   /*
 	    * PROCESSING EDGES
 	    */

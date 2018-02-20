@@ -14,9 +14,9 @@ int main(){
 	graph_file = "/data/hugo-data/hugo-others/datasets/.M-FLASH/lj/0.partition.output";
 	MappedStream stream (graph_file);
 
-	int32 from, to;
+	int64 from, to;
 	//float value;
-	int32 mfrom = 100000, mto = 100000;
+	int64 mfrom = 100000, mto = 100000;
 
 	while(stream.has_remain()){
 		from = stream.next_int();

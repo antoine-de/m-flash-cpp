@@ -21,8 +21,8 @@ int main(int argc, char ** argv){
     std::string pg_ranks 	= get_parent_directory(filename) + "pg";
 
 
-    Matrix<EmptyField, int32> matrix (filename);
-    PrimitiveVector<float, int32> pvector(pg_ranks);
+    Matrix<EmptyField, int64> matrix (filename);
+    PrimitiveVector<float, int64> pvector(pg_ranks);
     PageRank::run(matrix, pvector, niters);
     return 0;
 }
