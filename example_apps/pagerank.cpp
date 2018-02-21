@@ -8,8 +8,30 @@
 #include "../src/mflash_basic_includes.hpp"
 #include "../src/algorithm/pagerank.hpp"
 
+#include <set>
+
 using namespace std;
 using namespace mflash;
+
+const size_t MAX_SIZE = 20;
+
+template <class V, class IdType>
+class PrintVector: public ZeroOperator<V,IdType>{
+    public:
+        std::set<std::pair<float, int64>, std::greater<std::pair<float, int64>>> maxes;
+        inline void apply(Element<V, IdType> &out) {
+            auto val = *out.value;
+            if (maxes.size() < MAX_SIZE) {
+                maxes.insert({val, out.id});
+                return;
+            }
+            auto last_it = std::prev(maxes.end());
+            if (last_it->first < val) {
+                maxes.erase(last_it);
+                maxes.insert({val, out.id});
+            }
+        }
+};
 
 int main(int argc, char ** argv){
     mflash_init(argc, argv);
@@ -20,9 +42,17 @@ int main(int argc, char ** argv){
 
     std::string pg_ranks 	= get_parent_directory(filename) + "pg";
 
-
     Matrix<EmptyField, int64> matrix (filename);
     PrimitiveVector<float, int64> pvector(pg_ranks);
     PageRank::run(matrix, pvector, niters);
+
+	LOG(INFO) << "computing the best pagerank";
+    auto p = PrintVector<float, int64>{};
+    pvector.operate(p);
+
+	LOG(INFO) << "== best pagerank";
+    for (const auto& v: p.maxes) {
+	    LOG(INFO) << v.second << " " << v.first;
+    }
     return 0;
 }
